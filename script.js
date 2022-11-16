@@ -1,34 +1,71 @@
 // # Hashing
-// arbitary data structure  (signature, checking equality between objects, passwords, validation)
-// deterministically process data (always get the same output given the same input)
-// get the same integer out, i.e. data in === data out
+// #1 - something to hash - arbitary data structure (signature, checking equality between objects, passwords, validation)
+// #2 - do something to change it - deterministically process data (always get the same output given the same input)
+// #3 - display/return the hash - get the same integer out, i.e. data in === data out
 
+
+// require only needed for ourHashingFunctionUsingCryptoLibrary solution
 // import library from node (implementation specific)
-// const {
-//     createHash
-//   } = require('node:crypto');
+const {
+    createHash
+} = require('node:crypto');
 
-function ourHashingFunction (startingVal) {
 
+function ourHashingFunctionUsingCryptoLibrary () {
+
+    const hash = createHash('sha256'); // (implementation specific)
+
+    // #1 - something to hash
+    const startingVal = "abc";
+
+    // #2 - do something to change it
+    hash.update(startingVal);
+    const result = hash.digest('hex');
+
+    // #3 - display/return the hash
+    console.log(result);
+
+    return result;
+
+}
+
+function ourHashingFunctionUsingCaesarCypher () {
+
+    // our cypher (implementation specific)
     const caesar = {
         'a': 'b',
         'b': 'c',
         'c': 'd'
     }
 
-    // const hash = createHash('sha256'); (implementation specific)
-
     // #1 - something to hash
-    // const startingVal = "abc";
+    const startingVal = "abc";
+
 
     // #2 - do something to change it
-
-    // hash.update(startingVal); (implementation specific)
-
     let hashValue = [];
-    // for (let char of startingVal) {
-    //     hashValue.push(caesar[char]);
-    // }
+
+    for (let char of startingVal) {
+        hashValue.push(caesar[char]);
+    }
+
+    const result = hashValue.join('');
+
+
+    // #3 - display/return the hash
+    console.log(result);
+
+    return result;
+};
+
+function ourHashingFunctionUsingCharCodes (startingVal) {
+
+    // #1 - something to hash
+    // passed in as parameter
+
+
+    // #2 - do something to change it
+    let hashValue = [];
 
     for (let i = 0; i < startingVal.length; i++) {
         const codedChar = startingVal.charCodeAt(i);
@@ -38,14 +75,13 @@ function ourHashingFunction (startingVal) {
     const result = hashValue.join('');
 
     
-
-    // prepare for display (implementation specific)
-    // const result = hash.digest('hex');
-
     // #3 - display/return the hash
     console.log(result);
 
     return result;
 };
 
-ourHashingFunction('abc');
+
+ourHashingFunctionUsingCryptoLibrary();
+ourHashingFunctionUsingCaesarCypher();
+ourHashingFunctionUsingCharCodes('abc');
